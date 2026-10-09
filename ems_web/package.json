@@ -1,0 +1,36 @@
+{
+  "name": "ems-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Campus EMS Demo 前端（Vue 3＋Vite＋Quasar＋ECharts）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/noto-sans-tc": "^5.3.0",
+    "@quasar/extras": "^2.1.0",
+    "axios": "^1.20.0",
+    "echarts": "^6.1.0",
+    "quasar": "^2.34.0",
+    "vue": "^3.5.43",
+    "vue-echarts": "^8.3.1",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^2.0.2",
+    "@types/node": "^26.6.4",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/tsconfig": "^0.9.1",
+    "sass-embedded": "^1.105.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.2",
+    "vue-tsc": "^3.3.11"
+  }
+}

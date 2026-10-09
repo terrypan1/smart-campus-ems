@@ -1,0 +1,9 @@
+{
+  "name": "ems-playwright",
+  "private": true,
+  "type": "module",
+  "description": "EMS 驗收腳本（headless，不開視窗）。在 Windows 執行：npm install、node <腳本>",
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}

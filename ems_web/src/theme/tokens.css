@@ -1,0 +1,299 @@
+/* EMS 視覺 token。層次：page（底）→ chrome（側欄／頂欄）→ card（內容卡）→ raised（表格、輸入框）。
+ * 兩套主題刻意拉開差異（使用者要求）：
+ *   light＝辦公室／報表：淺灰白底、白色實心卡、深色字、青綠強調；Quasar 用 light 模式
+ *   dark ＝戰情／大螢幕：灰階卡片＋斜向微光；Quasar 用 dark 模式
+ * 狀態色（時段、告警、通訊、用途）不在這裡，由 status.ts 寫成 --st-* 變數。 */
+
+:root {
+  --font-sans: 'Inter Variable', 'Noto Sans TC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+  --header-h: 60px;
+}
+
+/* ---------- Light：辦公室／報表 ---------- */
+html[data-theme='light'] {
+  --page-bg: #f3f5f7;
+
+  --chrome-bg: #ffffff;
+  --chrome-border: #e3e8ee;
+  --chrome-shadow: none;
+
+  --card-bg: #ffffff;
+  --card-sheen: none;
+  --card-border: #e6eaef;
+  --card-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+
+  --tile-bg: #f7f9fb;
+  --tile-border: #e6eaef;
+
+  --overlay-bg: #ffffff;
+
+  --raised-bg: #ffffff;
+  --row-hover: #f4f7fa;
+  --row-selected: rgba(13, 148, 136, 0.08);
+  --divider: #edf0f3;
+  --table-head-bg: #f7f9fb;
+  --loading-mask: rgba(255, 255, 255, 0.6);
+  --autofill-bg: #ffffff;
+  --scrollbar: rgba(15, 23, 42, 0.22);
+
+  --text-1: #0f172a;
+  --text-2: #475569;
+  --text-3: #7b8794;
+
+  --accent: #0d9488;
+  --accent-strong: #0f766e;
+  --accent-text: #ffffff;
+  --accent-soft: #e6f5f3;
+  --nav-active-bg: #e6f5f3;
+  --nav-active-text: #0f766e;
+  --nav-hover-bg: #f1f5f9;
+
+  --q-primary: #0d9488;
+}
+
+/* ---------- Dark：戰情／大螢幕 ---------- */
+html[data-theme='dark'] {
+  /* 純黑底時側欄、卡片邊界看不出來，用很淡的漸層當底 */
+  --page-bg: radial-gradient(120% 80% at 70% 0%, #151a21 0%, #07090c 55%, #000000 100%);
+
+  --chrome-bg: rgba(20, 20, 20, 0.92);
+  --chrome-border: rgba(255, 255, 255, 0.16);
+  --chrome-shadow: none;
+
+  --card-bg: #171717;
+  --card-sheen: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 42%, rgba(255, 255, 255, 0.04) 100%);
+  --card-border: rgba(255, 255, 255, 0.18);
+  --card-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --tile-bg: rgba(255, 255, 255, 0.05);
+  --tile-border: rgba(255, 255, 255, 0.14);
+
+  --overlay-bg: #161616;
+
+  --raised-bg: #1f1f1f;
+  --row-hover: rgba(255, 255, 255, 0.04);
+  --row-selected: rgba(255, 255, 255, 0.08);
+  --divider: rgba(255, 255, 255, 0.1);
+  --table-head-bg: #1f1f1f;
+  --loading-mask: rgba(0, 0, 0, 0.55);
+  --autofill-bg: #1f1f1f;
+  --scrollbar: rgba(255, 255, 255, 0.28);
+
+  --text-1: #f3f4f6;
+  --text-2: #b4b9c2;
+  --text-3: #858b95;
+
+  --accent: #f3f4f6;
+  --accent-strong: #ffffff;
+  --accent-text: #000000;
+  --accent-soft: rgba(255, 255, 255, 0.12);
+  --nav-active-bg: rgba(255, 255, 255, 0.9);
+  --nav-active-text: #000000;
+  --nav-hover-bg: rgba(255, 255, 255, 0.06);
+
+  --q-primary: #f3f4f6;
+  --q-dark: #161616;
+  --q-dark-page: #000000;
+}
+
+/* ---------- 基底 ---------- */
+html,
+body {
+  font-family: var(--font-sans);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+}
+body,
+.q-layout {
+  background: var(--page-bg) fixed;
+}
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.text-1 { color: var(--text-1); }
+.text-2 { color: var(--text-2); }
+.text-3 { color: var(--text-3); }
+
+/* ---------- 外框 ---------- */
+.app-chrome {
+  background: var(--chrome-bg) !important;
+  box-shadow: var(--chrome-shadow);
+  color: var(--text-1);
+}
+/* QDrawer 的 class 落在 __content，外層 .q-drawer 自帶底色會蓋掉 */
+.q-drawer {
+  background: transparent !important;
+}
+
+/* ---------- 內容卡 ---------- */
+.app-card {
+  background: var(--card-sheen), var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--radius-lg);
+  color: var(--text-1);
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+/* ---------- 摘要小卡 ---------- */
+.kpi {
+  padding: 16px 18px;
+}
+.kpi-label {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.kpi-value {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+.kpi-value small {
+  margin-left: 4px;
+  font-size: 0.45em;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.kpi-sub {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* ---------- 浮層（選單、對話框、通知） ---------- */
+.q-menu,
+.q-dialog .q-card {
+  background: var(--overlay-bg) !important;
+  color: var(--text-1);
+  border: 1px solid var(--card-border);
+}
+.q-tooltip {
+  font-size: 12px;
+}
+
+/* ---------- 狀態標籤 ---------- */
+.st {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.st::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---------- 表格 ---------- */
+.app-table.q-table__container {
+  background: var(--raised-bg);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+  color: var(--text-1);
+}
+.app-table thead tr th {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--table-head-bg);
+  border-bottom: 1px solid var(--divider);
+}
+.app-table tbody td {
+  font-size: 13px;
+  border-bottom: 1px solid var(--divider);
+}
+.app-table tbody tr:hover > td {
+  background: var(--row-hover);
+}
+.app-table .q-table__bottom {
+  border-top: 1px solid var(--divider);
+  color: var(--text-2);
+}
+.app-table.sticky .q-table__middle {
+  max-height: 62vh;
+}
+.app-table.sticky thead tr th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* ---------- 主要按鈕：深色主題的強調色是淺灰白，不能用 Quasar color="primary"（白字會看不見） ---------- */
+.btn-primary {
+  background: var(--accent) !important;
+  color: var(--accent-text) !important;
+}
+
+/* ---------- 表單 ---------- */
+.q-field--outlined .q-field__control {
+  background: var(--raised-bg);
+}
+
+/* ---------- 頁面外距 ---------- */
+.app-page {
+  padding: 20px 24px 32px;
+}
+@media (max-width: 599px) {
+  .app-page {
+    padding: 12px 16px 24px;
+  }
+}
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.page-sub {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar) transparent;
+}
+
+/* Chrome 自動帶入帳密時會強制塗底色，用內陰影蓋回輸入框原本的底色 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-1);
+  caret-color: var(--text-1);
+  -webkit-box-shadow: 0 0 0 1000px var(--autofill-bg) inset;
+  transition: background-color 9999s ease-out 0s;
+}

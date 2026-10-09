@@ -1,0 +1,42 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+Logs/
+# 模擬器的累積電度狀態（執行時產生）
+state/
+
+# 前端
+node_modules/
+dist/
+*.local
+
+# 部署產出
+deploy/wsl/out/
+
+# 機密：一律用環境變數（部署機 /etc/ems/ems.env），不進版控
+.env
+.env.*
+!.env.example
+**/appsettings.*.local.json
+**/appsettings.Production.json
+**/secrets*.json
+*.pem
+*.key
+*.pfx
+*.p12
+*.log
+
+# 編輯器／系統
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 個人工作紀錄：只留在本機，不推上 Git
+docs/實作/
+docs/回報/
+docs/展示腳本.md
+tools/playwright/video.mjs
+tools/playwright/video-make.sh
